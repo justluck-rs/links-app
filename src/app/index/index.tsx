@@ -16,7 +16,6 @@ import { LinkStorage, linkStorage } from "@/storage/link-storage";
 
 export default function Index() {
   const [links, setLinks] = useState<LinkStorage[]>([]);
-  // Inicializa com a categoria "Todos" (primeira da lista)
   const [category, setCategory] = useState(categories[0].name);
   const [showModal, setShowModal] = useState(false);
   const [selectedLink, setSelectedLink] = useState<LinkStorage | null>(null);
@@ -27,7 +26,6 @@ export default function Index() {
     try {
       const links = await linkStorage.getLinks();
 
-      // Se a categoria for "Todos", mostra todos os links, caso contrário filtra por categoria
       const filteredLinks = category === "Todos"
         ? links
         : links.filter((item: LinkStorage) => item.category === category);
@@ -56,7 +54,6 @@ export default function Index() {
   function toggleSelectionMode() {
     setSelectionMode(prev => !prev);
     if (selectionMode) {
-      // Saindo do modo de seleção, limpa os links selecionados
       setSelectedLinks([]);
     }
   }
@@ -116,7 +113,6 @@ export default function Index() {
 
   async function handleOpenLink(url: string) {
     try {
-      // Verifica se a URL começa com http:// ou https://
       if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = 'https://' + url;
       }
@@ -128,7 +124,6 @@ export default function Index() {
     }
   }
 
-  // Atualiza a lista de links quando a tela recebe foco ou quando a categoria muda
   useFocusEffect(
     useCallback(() => {
       getLinks();
@@ -155,7 +150,7 @@ export default function Index() {
             name={item.name}
             url={item.url}
             category={item.category}
-            showCategory={category === "Todos"} // Mostra a categoria apenas quando estiver na visualização "Todos"
+            showCategory={category === "Todos"}
             onDetails={() => handleLinkPress(item)}
             selectionMode={selectionMode}
             isSelected={selectedLinks.includes(item.id)}

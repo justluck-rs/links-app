@@ -21,14 +21,12 @@ export default function Add() {
   const [url, setUrl] = useState("");
 
   async function handleAdd() {
-    // Verifica se todos os campos estão preenchidos
     if (!url.trim() || !name.trim() || !category) {
       Alert.alert("Aviso", "Preencha todos os campos");
-      return; // Retorna imediatamente se algum campo estiver vazio
+      return;
     }
 
     try {
-      // Só executa se todos os campos estiverem preenchidos
       await linkStorage.createLink({
         id: String(new Date().getTime()),
         name,
